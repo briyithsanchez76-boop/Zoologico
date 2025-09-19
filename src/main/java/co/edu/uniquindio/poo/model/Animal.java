@@ -50,9 +50,9 @@ public abstract class Animal {
     @Override
     public String toString() {
         return  name + 
-        "\n , code=" + code + 
-        " \n , numberWhiskers=" + numberWhiskers + 
-        "\n , ownedByZoologico=" + ownedByZoologico ;
+        "\n , code= " + code + 
+        " \n , numberWhiskers= " + numberWhiskers + 
+        "\n , ownedByZoologico= " + ownedByZoologico ;
     }
 
     public String makeSound(){

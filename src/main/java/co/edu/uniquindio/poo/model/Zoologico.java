@@ -1,5 +1,6 @@
 package co.edu.uniquindio.poo.model;
 import java.util.ArrayList;
+import java.util.Optional;
 public class Zoologico {
     private String name;
     private ArrayList<Animal> listAnimals;
@@ -24,35 +25,34 @@ public class Zoologico {
     public void setListAnimals(ArrayList<Animal> listAnimals) {
         this.listAnimals = listAnimals;
     }
+    
+    @Override
+    public String toString() {
+        return "Zoologico " + name + ", listAnimals=" + listAnimals.size();
+    }
+
     public String addAnimal(Animal newAnimal){
         String result=" ";
         Animal foundAnimal=null;
-        Animal existingAnimal= searchAnimal(newAnimal.getCode());
-        if(existingAnimal==null){
+        Optional <Animal> existingAnimal= searchAnimal(newAnimal.getCode());
+        if(existingAnimal.isPresent()){
             listAnimals.add(newAnimal);
             result= "The animal"  + newAnimal.getName() + "was added successfully";
         }else{
-            result="The animal with the code:"+newAnimal.getCode() + "already exists in the Zoo";
+            result="The animal with the code:  "+newAnimal.getCode() + " already exists in the Zoo";
         }
         return result;
     }
 
-    public Animal searchAnimal (int code){
-        Animal foundAnimal=null;
-        for(Animal i: listAnimals){
-            if(i.getCode()==code){
-                foundAnimal=i;
-                break;
-            }
-        }
-        return foundAnimal;
+    public Optional searchAnimal (int code){
+        return listAnimals.stream().filter(animal -> animal.getCode() == code).findFirst();
     }
 
     public String updateAnimal (String newName, int code){
         String result=" ";
-        Animal existingAnimal= searchAnimal(code);
-        if(existingAnimal!=null){
-            existingAnimal.setNombre(newName);
+        Optional <Animal> existingAnimal= searchAnimal(code);
+        if(existingAnimal.isPresent()){
+            existingAnimal.get().setNombre(newName);
             result="The animal with code: "+ code + "was updated correctly";
         }else{
             result="The animal doesn't exist in the zoo";
@@ -62,8 +62,8 @@ public class Zoologico {
 
     public String removeAnimal(int code){
         String result=" ";
-        Animal existingAnimal=searchAnimal(code);
-        if(existingAnimal!=null){
+        Optional <Animal> existingAnimal=searchAnimal(code);
+        if(existingAnimal.isPresent()){
             listAnimals.remove(existingAnimal);
             result="The animal with code: " + code + "was removed successfully";
         }else{
@@ -78,4 +78,5 @@ public class Zoologico {
         }
         return sound;
     }
+    
 }
