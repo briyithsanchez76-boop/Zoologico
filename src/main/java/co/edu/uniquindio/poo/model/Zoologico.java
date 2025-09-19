@@ -33,7 +33,6 @@ public class Zoologico {
 
     public String addAnimal(Animal newAnimal){
         String result=" ";
-        Animal foundAnimal=null;
         Optional <Animal> existingAnimal= searchAnimal(newAnimal.getCode());
         if(existingAnimal.isPresent()){
             listAnimals.add(newAnimal);
