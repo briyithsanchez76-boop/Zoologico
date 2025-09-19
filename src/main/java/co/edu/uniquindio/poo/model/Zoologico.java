@@ -34,7 +34,7 @@ public class Zoologico {
     public String addAnimal(Animal newAnimal){
         String result=" ";
         Optional <Animal> existingAnimal= searchAnimal(newAnimal.getCode());
-        if(existingAnimal.isPresent()){
+        if(existingAnimal.isEmpty()){
             listAnimals.add(newAnimal);
             result= "The animal"  + newAnimal.getName() + "was added successfully";
         }else{
